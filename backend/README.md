@@ -8,9 +8,9 @@ The CRIO Task Manager API provides endpoints for managing tasks and users. This 
 
 ## How to run locally
 
-cd backend
-npm install
-npm run dev
+- cd backend
+- npm install
+- npm run dev
 
 ## **Authentication**
 

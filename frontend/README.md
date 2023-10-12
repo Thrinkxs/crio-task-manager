@@ -2,9 +2,9 @@
 
 ## How to run
 
-cd backend
-npm install
-npm run dev
+- cd backend
+- npm install
+- npm run dev
 
 **Project Technical Explanation:**
 
