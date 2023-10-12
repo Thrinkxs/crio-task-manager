@@ -7,8 +7,10 @@ const TaskSchema = new mongoose.Schema({
     type: String,
   },
   assignee: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "User",
+    // populate: "username",
   },
   status: {
     type: String,

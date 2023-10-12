@@ -26,9 +26,9 @@ const createTask = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const readTask = (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
-  return Task.findById(id)
-    .populate("assignee")
+  const id = req.params.taskId;
+  Task.findById(id)
+    .populate("assignee", "username")
     .exec()
     .then((task) => {
       if (task) {
@@ -59,8 +59,8 @@ const readAllTask = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateTask = (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
-  return Task.findByIdAndUpdate(id)
+  const id = req.params.taskId;
+  Task.findByIdAndUpdate(id)
 
     .exec()
     .then((task) => {
@@ -91,8 +91,8 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const deleteTask = (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
-  return Task.findByIdAndDelete(id)
+  const id = req.params.taskId;
+  Task.findByIdAndRemove(id)
     .exec()
     .then((result) => {
       result
@@ -103,6 +103,12 @@ const deleteTask = (req: Request, res: Response, next: NextFunction) => {
         : res.status(404).json({
             message: "Task not found",
           });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: "server error",
+        error: err,
+      });
     });
 };
 

@@ -19,6 +19,7 @@ import {
   Button,
   useDisclosure,
   ChakraProvider,
+  Select,
 } from "@chakra-ui/react";
 import { Backdrop, Skeleton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -27,14 +28,16 @@ import { MdEdit } from "react-icons/md";
 
 import { Axios } from "../Axios";
 import useTaskData from "../hooks/useTaskData";
-
+import useUserData from "../hooks/useUserData";
 const Tasks = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [success, setSuccess] = useState(false);
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const { taskData, setTaskData } = useTaskData();
+  const { userData, setUserData } = useUserData();
   const Tasks = taskData;
+  const Users = userData;
   const getRowId = (task) => task._id;
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -49,7 +52,7 @@ const Tasks = () => {
   const dataGridRef = useRef<DataGrid>(null);
   const [loading, setLoading] = useState(true);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -61,11 +64,11 @@ const Tasks = () => {
     {
       field: "name",
       headerName: "Name",
-      width: 300,
+      width: 150,
     },
     { field: "description", headerName: "Description", width: 300 },
-    { field: "assignee", headerName: "Assignee", width: 300 },
-    { field: "status", headerName: "Status", width: 300 },
+    { field: "assignee", headerName: "Assignee", width: 150 },
+    { field: "status", headerName: "Status", width: 150 },
     { field: "category", headerName: "Category", width: 300 },
     {
       field: "Actions",
@@ -195,7 +198,7 @@ const Tasks = () => {
           </Button>
         </ChakraProvider>
       </div>
-      <div style={{ height: 500, width: "900px", padding: "20px" }}>
+      <div style={{ height: 500, width: "1700px", padding: "20px" }}>
         {!Tasks ? (
           <Skeleton
             variant="rectangular"
@@ -256,23 +259,43 @@ const Tasks = () => {
               </FormControl>
               <FormControl>
                 <FormLabel>Assignee</FormLabel>
-                <Input
+                <Select
+                  placeholder="Select option"
+                  name="assignee"
+                  onChange={handleInputChange}
+                  value={formData.assignee}
+                >
+                  {Users.map((user) => (
+                    <option key={user._id} value={user.username}>
+                      {user.username}
+                    </option>
+                  ))}
+                </Select>
+                {/* <Input
                   ref={initialRef}
                   placeholder="assignee"
                   name="assignee"
                   value={formData.assignee}
                   onChange={handleInputChange}
-                />
+                /> */}
               </FormControl>
               <FormControl>
                 <FormLabel>Status</FormLabel>
-                <Input
+                <Select
+                  name="status"
+                  onChange={handleInputChange}
+                  value={formData.status}
+                >
+                  <option value="In Progress">In Progress</option>
+                  <option value="Closed">Completed</option>
+                </Select>
+                {/* <Input
                   ref={initialRef}
                   placeholder="Status"
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                />
+                /> */}
               </FormControl>
               <FormControl>
                 <FormLabel>Category</FormLabel>

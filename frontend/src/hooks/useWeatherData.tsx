@@ -25,7 +25,7 @@ const useWeatherData = () => {
     };
 
     const getCityFromCoordinates = async (lat, lon) => {
-      const apiKey = "a0e02d705ef3115c379a3bd9cd84a527";
+      const apiKey = "30eed2d5a628423c8763dc8c496d9060";
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${apiKey}&pretty=1`;
 
       try {
@@ -51,22 +51,23 @@ const useWeatherData = () => {
           console.error("Error getting user location:", error);
         });
 
-      // Fetch weather data based on userCity here...
-    }, []);
+      const fetchWeatherData = async () => {
+        try {
+          const apiKey = "a0e02d705ef3115c379a3bd9cd84a527";
+          const city = userCity;
+          const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
-    return (
-      <div className="weather-info">
-        <strong>Location:</strong> {userCity}
-        {weatherData && (
-          <>
-            <br />
-            <strong>Weather:</strong> {weatherData.weather[0].description},{" "}
-            <strong>Temperature:</strong>{" "}
-            {Math.round(weatherData.main.temp - 273.15)}°C
-          </>
-        )}
-      </div>
-    );
+          const response = await fetch(url);
+          const data = await response.json();
+
+          setWeatherData(data);
+        } catch (error) {
+          console.error("Error fetching weather data:", error);
+        }
+      };
+
+      fetchWeatherData();
+    }, []);
   };
   return { weatherData, setWeatherData };
 };
