@@ -6,6 +6,12 @@ The CRIO Task Manager API provides endpoints for managing tasks and users. This 
 
 - The base URL for the API is `http://localhost:3001/` when running locally. For a deployed version, the base URL would be different, depending on the hosting platform.
 
+## How to run locally
+
+cd backend
+npm install
+npm run dev
+
 ## **Authentication**
 
 - This API does not include authentication.

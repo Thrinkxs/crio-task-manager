@@ -1,5 +1,11 @@
 # CRIO TASK MANAGER
 
+## How to run
+
+cd backend
+npm install
+npm run dev
+
 **Project Technical Explanation:**
 
 The CRIO Task Manager is a web-based task management system that allows users to create, read, update, and delete tasks and users. It provides a user-friendly interface for managing tasks and users. The project uses the MERN stack, which consists of MongoDB, Express.js, React.js, and Node.js. Let's break down the technical aspects and design patterns used in this project:
