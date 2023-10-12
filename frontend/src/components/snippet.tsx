@@ -41,3 +41,48 @@
 
 //     fetchWeatherData();
 //   }, []);
+
+
+{
+    coord: {
+    lon: 27.975,
+    lat: -26.0961
+    },
+    weather: [
+    {
+    id: 804,
+    main: "Clouds",
+    description: "overcast clouds",
+    icon: "04n"
+    }
+    ],
+    base: "stations",
+    main: {
+    temp: 289.67,
+    feels_like: 289.39,
+    temp_min: 289.67,
+    temp_max: 290.04,
+    pressure: 1019,
+    humidity: 77
+    },
+    visibility: 10000,
+    wind: {
+    speed: 2.06,
+    deg: 240
+    },
+    clouds: {
+    all: 85
+    },
+    dt: 1697147443,
+    sys: {
+    type: 1,
+    id: 1958,
+    country: "ZA",
+    sunrise: 1697081791,
+    sunset: 1697127154
+    },
+    timezone: 7200,
+    id: 993800,
+    name: "Randburg",
+    cod: 200
+    }

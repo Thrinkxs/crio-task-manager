@@ -21,6 +21,7 @@ import { AiOutlinePlus, AiOutlineDelete, AiFillEdit } from "react-icons/ai";
 import { MdEdit } from "react-icons/md";
 import useUserData from "../hooks/useUserData";
 import { Axios } from "../Axios";
+import WeatherComponent from "../components/WeatherComponent";
 
 const Users = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -159,6 +160,7 @@ const Users = () => {
   return (
     <>
       <div className="flex py-8 justify-center gap-96  items-center">
+        <WeatherComponent />
         <h1 className="text-4xl font-bold">Users</h1>
         <ChakraProvider>
           <Button

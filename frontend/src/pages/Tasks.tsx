@@ -24,11 +24,12 @@ import {
 import { Backdrop, Skeleton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { AiOutlinePlus, AiOutlineDelete, AiFillEdit } from "react-icons/ai";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdDone } from "react-icons/md";
 
 import { Axios } from "../Axios";
 import useTaskData from "../hooks/useTaskData";
 import useUserData from "../hooks/useUserData";
+import WeatherComponent from "../components/WeatherComponent";
 const Tasks = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [success, setSuccess] = useState(false);
@@ -84,6 +85,10 @@ const Tasks = () => {
             <AiOutlineDelete
               className="text-lg cursor-pointer"
               onClick={() => handleDelete(params.row)}
+            />
+            <MdDone
+              className="text-lg cursor-pointer"
+              onClick={() => handleTaskDone(params.row)}
             />
           </div>
         </>
@@ -156,7 +161,7 @@ const Tasks = () => {
     }
   };
 
-  const handleUpdateUser = async () => {
+  const handleUpdateTask = async () => {
     try {
       const response = await Axios.patch(`/api/tasks/update/${formData._id}`, {
         name: formData.name,
@@ -185,9 +190,33 @@ const Tasks = () => {
     }
   };
 
+  const handleTaskDone = async (params) => {
+    try {
+      const response = await Axios.patch(`/api/tasks/update/${params._id}`, {
+        ...params,
+        status: "Completed",
+      });
+
+      if (!response) {
+        throw new Error("Network response was not ok");
+      } else if (response.status === 200) {
+        setSuccess(true);
+        setOpen(true);
+        onClose();
+        if (dataGridRef.current) {
+          dataGridRef.current.clearSelection();
+        }
+        setEditMode(false);
+      }
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
+  };
+
   return (
     <>
       <div className="flex py-8 justify-center gap-96  items-center">
+        <WeatherComponent />
         <h1 className="text-4xl font-bold">Tasks</h1>
         <ChakraProvider>
           <Button
@@ -282,6 +311,7 @@ const Tasks = () => {
               <FormControl>
                 <FormLabel>Status</FormLabel>
                 <Select
+                  placeholder="Select option"
                   name="status"
                   onChange={handleInputChange}
                   value={formData.status}
@@ -311,7 +341,7 @@ const Tasks = () => {
 
             <ModalFooter>
               {editMode ? (
-                <Button colorScheme="blue" mr={3} onClick={handleUpdateUser}>
+                <Button colorScheme="blue" mr={3} onClick={handleUpdateTask}>
                   Update
                 </Button>
               ) : (
