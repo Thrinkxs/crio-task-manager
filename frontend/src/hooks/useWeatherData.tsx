@@ -23,7 +23,7 @@ const useWeatherData = () => {
   };
 
   const getCityFromCoordinates = async (lat, lon) => {
-    const apiKey = "30eed2d5a628423c8763dc8c496d9060";
+    const apiKey = "";
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${apiKey}&pretty=1`;
 
     try {
@@ -48,7 +48,7 @@ const useWeatherData = () => {
         );
         setUserCity(city);
 
-        const apiKey = "a0e02d705ef3115c379a3bd9cd84a527";
+        const apiKey = "";
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
         const response = await fetch(url);
         const data = await response.json();
